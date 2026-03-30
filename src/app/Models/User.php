@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'postal_code',
+        'address',
+        'building',
+        'profile_image',
     ];
 
     /**
@@ -41,4 +45,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーション定義
+     */
+
+    // 出品した商品
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    // いいねした商品
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    // コメントした商品
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    // 購入した商品
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    /**
+     * アクセサ（便利メソッド）
+     */
+
+    // フルアドレス（郵便番号 + 住所 + 建物名）
+    public function getFullAddressAttribute()
+    {
+        $address = $this->postal_code . ' ' . $this->address;
+        if ($this->building) {
+            $address .= ' ' . $this->building;
+        }
+        return $address;
+    }
 }

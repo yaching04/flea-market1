@@ -1,0 +1,24 @@
+# Laravel標準で無視すべきもの
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.backup
+.phpunit.result.cache
+
+# Docker + MySQLのデータ（これが一番大事！）
+docker/mysql/data/
+docker/mysql/data/*
+
+# ログやキャッシュ
+/storage/logs/
+storage/framework/
+bootstrap/cache/
+
+# OS / エディタのゴミファイル
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.swp
